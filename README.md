@@ -2,9 +2,11 @@
 
 Run with
 
-```cmd
+```sh
 # run latest day ...
 cargo run
 # ... or a specific day
 cargo run -- -d [0..25]
+# run unit tests
+cargo test
 ```
