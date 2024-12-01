@@ -1,8 +1,8 @@
 use clap::Parser;
 
 pub mod day;
-pub mod util;
 pub mod solution;
+pub mod util;
 
 #[derive(Parser, Debug)]
 struct Cli {

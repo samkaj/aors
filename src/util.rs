@@ -2,7 +2,7 @@ use crate::day::day01;
 use crate::solution::Solution;
 
 pub fn get_lines(day: i32) -> Result<Vec<String>, String> {
-    let filename = format!("../inputs/day{:02}.txt", day);
+    let filename = format!("inputs/day{:02}.txt", day);
     let file = match std::fs::read_to_string(filename) {
         Ok(f) => f,
         Err(e) => {
@@ -16,14 +16,13 @@ pub fn get_lines(day: i32) -> Result<Vec<String>, String> {
 
 pub fn get_latest_day() -> Result<i32, String> {
     let mut latest_day = 0;
-    while std::path::Path::new(&format!("../inputs/day{:02}.txt", latest_day + 1)).exists() {
+    while std::path::Path::new(&format!("inputs/day{:02}.txt", latest_day + 1)).exists() {
         latest_day += 1;
     }
 
     if latest_day == 0 {
         return Err("No input files for any days found".to_string());
     }
-
     Ok(latest_day)
 }
 
