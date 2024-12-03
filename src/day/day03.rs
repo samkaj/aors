@@ -32,16 +32,16 @@ fn part1(lines: Vec<String>) -> String {
     return sum.to_string();
 }
 
-fn part2(_lines: Vec<String>) -> String {
-    "".to_string()
+fn part2(lines: Vec<String>) -> String {
+    let line = get_enabled_parts(lines.join(""));
+    let sum: i32 = part1(line).parse().unwrap_or(0);
+
+    sum.to_string()
 }
 
 fn extract_matches(line: String) -> Vec<(i32, i32)> {
     let pattern = r"mul\((\d{1,3}),(\d{1,3})\)";
-    let regex = match Regex::new(pattern) {
-        Ok(r) => r,
-        Err(e) => unreachable!("{}", e),
-    };
+    let regex = Regex::new(pattern).expect("invalid regex");
 
     let matches: Vec<(i32, i32)> = regex
         .captures_iter(line.as_str())
@@ -53,6 +53,17 @@ fn extract_matches(line: String) -> Vec<(i32, i32)> {
         .collect();
 
     matches
+}
+
+fn get_enabled_parts(line: String) -> Vec<String> {
+    let do_split: Vec<&str> = line.split("do()").collect();
+    let mut enabled: Vec<String> = vec![];
+    for dos in do_split.as_slice() {
+        let foo: Vec<&str> = dos.split("don't()").collect();
+        enabled.push(foo.get(0).unwrap().to_string());
+    }
+
+    enabled
 }
 
 #[cfg(test)]
@@ -69,8 +80,9 @@ mod tests {
 
     #[test]
     fn test_solve_part2() {
-        let test_input = "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))";
+        let test_input =
+            "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))";
         let lines = util::multiline_to_vec(test_input);
-        assert_eq!(part2(lines), "4");
+        assert_eq!(part2(lines), "48");
     }
 }
