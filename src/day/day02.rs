@@ -62,21 +62,6 @@ fn all_decreasing(list: Vec<i32>) -> bool {
     orig == list
 }
 
-fn number_of_errors(list: Vec<i32>) -> i32 {
-    let mut iter = list.iter();
-    let mut prev = iter.next().expect("empty list");
-    let mut count = 0;
-    for n in iter {
-        let diff = i32::abs(n - prev);
-        if diff == 0 || diff > 3 {
-            count += 1;
-        }
-        prev = n;
-    }
-
-    count
-}
-
 fn diff_ok(list: Vec<i32>) -> bool {
     let mut iter = list.iter();
     let mut prev = iter.next().expect("empty list");
