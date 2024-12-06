@@ -135,7 +135,36 @@ fn part1(lines: Vec<String>) -> String {
 }
 
 fn part2(lines: Vec<String>) -> String {
-    return "".to_string();
+    let check = |s1: String, s2: String| -> bool {
+        (s1 == "MAS" || s1 == "SAM") && (s2 == "MAS" || s2 == "SAM")
+    };
+    let mut count = 0;
+    let height = lines.len();
+    for (i, line) in lines.clone().iter().enumerate() {
+        for (j, char) in line.clone().chars().enumerate() {
+            if char == 'A' {
+                if i + 1 < height && i > 0 && j + 1 < line.len() && j > 0 {
+                    //let up_left = lines[i].chars().collect::<Vec<_>>()[j]
+                    let left = format!(
+                        "{}{}{}",
+                        lines[i - 1].chars().collect::<Vec<_>>()[j - 1],
+                        lines[i].chars().collect::<Vec<_>>()[j],
+                        lines[i + 1].chars().collect::<Vec<_>>()[j + 1],
+                    );
+                    let right = format!(
+                        "{}{}{}",
+                        lines[i - 1].chars().collect::<Vec<_>>()[j + 1],
+                        lines[i].chars().collect::<Vec<_>>()[j],
+                        lines[i + 1].chars().collect::<Vec<_>>()[j - 1],
+                    );
+                    if check(left, right) {
+                        count += 1;
+                    }
+                }
+            }
+        }
+    }
+    return count.to_string();
 }
 
 #[cfg(test)]
@@ -144,7 +173,7 @@ mod tests {
     use crate::util;
 
     #[test]
-    fn p1() {
+    fn test_solve_part1() {
         let test_input = r#"MMMSXXMASM
 MSAMXMSMSA
 AMXSXMAAMM
@@ -161,8 +190,17 @@ MXMXAXMASX"#;
 
     #[test]
     fn test_solve_part2() {
-        let test_input = r#""#;
+        let test_input = r#".M.S......
+..A..MSMS.
+.M.S.MAA..
+..A.ASMSM.
+.M.S.M....
+..........
+S.S.S.S.S.
+.A.A.A.A..
+M.M.M.M.M.
+.........."#;
         let lines = util::multiline_to_vec(test_input);
-        assert_eq!(part2(lines), "TODO");
+        assert_eq!(part2(lines), "9");
     }
 }
