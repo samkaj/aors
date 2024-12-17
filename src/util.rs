@@ -1,4 +1,4 @@
-use crate::day::{day01, day02, day03, day04, day05};
+use crate::day::{day01, day02, day03, day04, day05, day06};
 use crate::solution::Solution;
 
 pub fn get_lines(day: i32) -> Result<Vec<String>, String> {
@@ -33,6 +33,7 @@ pub fn solve(day: i32, lines: Vec<String>) -> Result<Solution, String> {
         3 => Ok(day03::solve(lines)),
         4 => Ok(day04::solve(lines)),
         5 => Ok(day05::solve(lines)),
+        6 => Ok(day06::solve(lines)),
         _ => Err(format!("Day {day} not implemented")),
     }
 }
